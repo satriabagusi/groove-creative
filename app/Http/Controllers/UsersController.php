@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -57,8 +57,6 @@ class UserController extends Controller
             'name' => $request->nama,
             'email' => $request->email,
             'phone_number' => $request->no_hp,
-            "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
-            "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
         ]);
 
 

@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\PagesController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,13 +22,16 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [PagesController::class, 'login'])->name('login');
-Route::post('/login', [UserController::class, '__login'])->name('postLogin');
+Route::post('/login', [UsersController::class, '__login'])->name('postLogin');
 Route::get('/register', [PagesController::class, 'register']);
-Route::post('/register', [UserController::class, 'store'])->name('postRegister');
+Route::post('/register', [UsersController::class, 'store'])->name('postRegister');
 
 Route::get('/dashboard', [PagesController::class, 'dashboard']);
-Route::get('/dashboard/employee', [UserController::class, 'index']);
+Route::get('/dashboard/employee', [UsersController::class, 'index']);
+
+Route::get('/dashboard/project', [ProjectsController::class, 'index']);
+Route::get('/dashboard/project/add', [ProjectsController::class, 'create']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
 });

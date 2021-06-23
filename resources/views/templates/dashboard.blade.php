@@ -15,7 +15,12 @@
 <!-- Theme style -->
 <link rel="stylesheet" href="{{asset('css/adminlte.css')}}">
 
-<link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.css')}}">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="{{asset('plugins/select2/css/select2.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}">
+
     @livewireStyles()
 </head>
 
@@ -115,7 +120,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @yield('project')">
                 <a href="#" class="nav-link">
                     <ion-icon name="documents"></ion-icon>
                     <p>
@@ -125,13 +130,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/dashboard/project" class="nav-link @yield('project-list')">
                         <ion-icon name="document-text"></ion-icon>
                         <p>Data Proyek</p>
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/dashboard/project/add" class="nav-link @yield('add-project')">
                         <ion-icon name="document-attach"></ion-icon>
                         <p>Tambah Proyek</p>
                     </a>
@@ -139,7 +144,7 @@
                 </ul>
             </li>
             <li class="nav-item @yield('employee')">
-                <a href="#" class="nav-link @yield('employee-list')">
+                <a href="#" class="nav-link">
                     <ion-icon name="id-card"></ion-icon>
                     <p>
                     Pegawai
@@ -298,11 +303,14 @@ All rights reserved.
 
 
 <!-- jQuery -->
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('plugins/jquery/jquery.js')}}"></script>
 <!-- Bootstrap -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.js')}}"></script>
 <!-- AdminLTE -->
 <script src="{{asset('js/adminlte.js')}}"></script>
+
+<!-- Select2 -->
+<script src="{{asset('plugins/select2/js/select2.full.js')}}"></script>
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
@@ -318,6 +326,18 @@ All rights reserved.
 
 
 <script>
+
+$(function(){
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+})
+
+
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -341,6 +361,12 @@ const Toast = Swal.mixin({
             })
     })
     </script>
+@endif
+
+@if (session()->has('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
 @endif
 
 </body>

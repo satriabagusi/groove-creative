@@ -1,8 +1,8 @@
 @extends('templates.dashboard')
-@section('title', 'Groove Creative - Data Pegawai')
-@section('employee', 'active menu-is-opening menu-open')
-@section('employee-list', 'active')
-@section('header-text', 'Data Pegawai')
+@section('title', 'Groove Creative - Data Proyek')
+@section('project', 'active menu-is-opening menu-open')
+@section('project-list', 'active')
+@section('header-text', 'Data Proyek')
 
 @section('content')
 
@@ -11,7 +11,7 @@
 <div class="content">
     <div class="container-fluid">
 
-        @livewire('user-list')
+        @livewire('project-list')
 
     </div>
     <!-- /.container-fluid -->

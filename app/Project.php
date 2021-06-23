@@ -11,6 +11,6 @@ class Project extends Model
     }
 
     public function project_employees(){
-        return $this->hasMany('App\Project_employee');
+        return $this->belongsToMany('App\Project_employee');
     }
 }
