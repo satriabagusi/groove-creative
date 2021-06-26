@@ -12,6 +12,10 @@ class ProjectList extends Component
 
     public $searchProject;
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     protected $paginationTheme = 'bootstrap';
     public function render()
     {

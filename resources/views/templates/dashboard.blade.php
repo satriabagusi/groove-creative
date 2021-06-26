@@ -5,9 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>@yield('title')</title>
 
-<!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<!-- Font Awesome Icons -->
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+  <!-- Bootstrap Select -->
+  <link rel="stylesheet" href="{{asset('plugins/bootstrap-select/css/bootstrap-select.css')}}">
+
+{{--
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}"> --}}
+  {{-- <!-- dropzonejs -->
+  <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css"> --}}
+
 <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.css')}}">
 <!-- IonIcons -->
 {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
@@ -17,9 +27,6 @@
 
 <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.css')}}">
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="{{asset('plugins/select2/css/select2.css')}}">
-<link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}">
 
     @livewireStyles()
 </head>
@@ -309,8 +316,11 @@ All rights reserved.
 <!-- AdminLTE -->
 <script src="{{asset('js/adminlte.js')}}"></script>
 
+<!-- Bootstrap Select -->
+<script src="{{asset('plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+
 <!-- Select2 -->
-<script src="{{asset('plugins/select2/js/select2.full.js')}}"></script>
+{{-- <script src="{{asset('plugins/select2/js/select2.full.js')}}"></script> --}}
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
@@ -324,33 +334,9 @@ All rights reserved.
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @livewireScripts()
 
+@stack('scripts')
 
-<script>
-
-$(function(){
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-})
-
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-})
-
-</script>
+<script src="{{asset('js/script.js')}}"></script>
 
 @if (Session::has('success'))
     <script>
@@ -368,6 +354,7 @@ const Toast = Swal.mixin({
         {{ session('message') }}
     </div>
 @endif
+
 
 </body>
 </html>
