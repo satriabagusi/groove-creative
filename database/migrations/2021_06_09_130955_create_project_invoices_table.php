@@ -16,6 +16,7 @@ class CreateProjectInvoicesTable extends Migration
         Schema::create('project_invoices', function (Blueprint $table) {
             $table->id();
             $table->string('order_id');
+            $table->string('no_invoice', 25);
             $table->bigInteger('total_pay');
             $table->unsignedBigInteger('project_id');
             $table->timestamps();

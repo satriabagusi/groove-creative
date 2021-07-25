@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('client_name');
             $table->string('client_contact');
             $table->integer('estimate_budget');
+            $table->integer('total_project');
             $table->integer('project_status');
             $table->integer('pay_status');
             $table->text('project_description');

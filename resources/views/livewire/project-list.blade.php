@@ -1,5 +1,5 @@
 <div>
-@if (!$detailMode)
+@if ($detailMode)
 
       <div class="card">
           {{$project}}
@@ -56,8 +56,9 @@
                         <a href="#" class="text-bold d-block">Tony Chicken</a>
                     </p>
                     <div class="text-right mt-5 mb-3">
-                        <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                        <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                        <a href="#" class="btn btn-sm btn-info">Copy Link Invoices</a>
+                        <a href="#" class="btn btn-sm btn-primary">Cetak Invoices</a>
+                        <a href="#" class="btn btn-sm btn-warning"> <ion-icon name="mail"></ion-icon> Hubungi Klien</a>
                     </div>
                 </div>
             </div>

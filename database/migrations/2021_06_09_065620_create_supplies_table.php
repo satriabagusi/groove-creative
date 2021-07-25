@@ -16,9 +16,9 @@ class CreateSuppliesTable extends Migration
         Schema::create('supplies', function (Blueprint $table) {
             $table->id();
             $table->string('supply_name');
-            $table->string('supplier_name')->nullable();
             $table->integer('price');
             $table->integer('stock');
+            $table->string('unit');
             $table->string('supplier_contact')->nullable();
             $table->timestamps();
         });
