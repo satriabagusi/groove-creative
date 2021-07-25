@@ -2,11 +2,14 @@
 @if ($detailMode)
 
       <div class="card">
-          {{$project}}
+          {{-- {{$project}} --}}
         <div class="card-header">
             <div class="row">
-                <ion-icon style="font-size: 24px;" class="align-baseline text-primary mr-2" name="arrow-back-circle" wire:click="$set('detailMode', false)" wire:ignore></ion-icon>
-                <h3 class="card-title">Detail Proyek</h3>
+                <button class="btn btn-primary btn-circle btn-sm mr-2"  wire:click="$toggle('detailMode')">
+                    <i style="font-size: 14px;" class="fas fa-arrow-left"></i>
+                </button>
+                <h3 class="card-title mt-1">Detail Proyek</h3>
+
             </div>
         </div>
         <div class="card-body">
@@ -15,7 +18,7 @@
                     <div class="info-box bg-light">
                     <div class="info-box-content">
                         <span class="info-box-text text-center text-success text-bold">
-                            <ion-icon class="" name="card"></ion-icon> Estimasi Anggaran
+                            <i class="fas fa-money-bill-wave"></i> Estimasi Anggaran
                         </span>
                         <span class="info-box-number text-center text-success mb-0">Rp. {{number_format(45000000, 0,0,'.')}}</span>
                     </div>
@@ -25,7 +28,7 @@
                     <div class="info-box bg-light">
                         <div class="info-box-content">
                             <span class="info-box-text text-center text-danger text-bold">
-                                <ion-icon class="" name="card"></ion-icon> Total Pengeluaran Proyek
+                                <i class="fas fa-money-bill-wave"></i> Total Pengeluaran Proyek
                             </span>
                             <span class="info-box-number text-center text-danger mb-0">Rp. {{number_format(15000000, 0,0,'.')}}</span>
                         </div>
@@ -35,17 +38,17 @@
             <div class="row justify-content-center">
                 <div class="col-6 ">
                     <h2 class="text-primary">
-                        <ion-icon name="document"></ion-icon>
-                        {{-- {{$project->project_name}} --}}
+                        <i class="fas fa-clipboard-list"></i>
+                        {{$project->project_name}}
                     </h2>
                         <h5 class="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</h5>
                     <br>
                     <div class="text-muted">
                         <p class="text">Klien Proyek
-                            {{-- <b class="d-block">{{$project->client_name}}</b> --}}
+                            <b class="d-block">{{$project->client_name}}</b>
                         </p>
                         <p class="text">Pemimpin Proyek
-                            {{-- <b class="d-block">{{$project->users->employees->name}}</b> --}}
+                            <b class="d-block">{{$project->users->employees->name}}</b>
                         </p>
 
 
@@ -55,10 +58,25 @@
                     <p class="text-sm">Invoice Proyek
                         <a href="#" class="text-bold d-block">Tony Chicken</a>
                     </p>
-                    <div class="text-right mt-5 mb-3">
-                        <a href="#" class="btn btn-sm btn-info">Copy Link Invoices</a>
-                        <a href="#" class="btn btn-sm btn-primary">Cetak Invoices</a>
-                        <a href="#" class="btn btn-sm btn-warning"> <ion-icon name="mail"></ion-icon> Hubungi Klien</a>
+                    <p class="text-sm">Payment Link
+                        <div>
+                            <a href="#" class="text-bold">Down Payment Link</a>
+                            <span wire:ignore class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Copy Link" onClick="copyToClipboard()">
+                                <i class="fas fa-link"></i>
+                            </span>
+                        </div>
+                        <a href="#" class="text-bold d-block">Link Pelunasan Pembayaran</a>
+                    </p>
+                    <div class="text-left mt-5 mb-3">
+                        <a href="#" class="btn btn-sm btn-info mb-2">
+                            <i class="fas fa-copy"></i> Copy Link Invoices
+                        </a>
+                        <a href="#" class="btn btn-sm btn-primary mb-2">
+                            <i class="fas fa-print"></i> Cetak Invoices
+                        </a>
+                        <a href="#" class="btn btn-sm btn-warning mb-2">
+                            <i class="fas fa-envelope"></i> Hubungi Klien
+                        </a>
                     </div>
                 </div>
             </div>
@@ -294,10 +312,12 @@
 <script>
 
     $(document).ready(function(){
-        console.log('LOADED');
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        function copyToClipboard(params) {
+
+        }
 
         window.addEventListener('swal', function(e){
             Swal.fire(e.detail);
@@ -312,6 +332,10 @@
     window.addEventListener('editData', function() {
         $('.selectpicker').selectpicker('refresh');
     });
+
+    window.addEventListener('refreshProp', function(){
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 
 
     window.addEventListener('swal:confirm', function(e){
