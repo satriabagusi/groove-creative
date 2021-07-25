@@ -10,7 +10,11 @@ class Project extends Model
         return $this->hasMany('App\Project');
     }
 
-    public function project_employees(){
-        return $this->belongsToMany('App\Project_employee');
+    public function users(){
+        return $this->belongsTo('App\User', 'project_leader_id', 'id');
     }
+
+    protected $guarded = [
+
+    ];
 }

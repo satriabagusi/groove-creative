@@ -1,6 +1,6 @@
 @extends('templates.dashboard')
 @section('title', 'Groove Creative - Tambah Proyek')
-@section('project', 'active menu-is-opening menu-open')
+@section('project', 'menu-open')
 @section('add-project', 'active')
 @section('header-text', 'Data Pegawai')
 

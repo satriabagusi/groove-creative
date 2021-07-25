@@ -27,4 +27,8 @@ class PagesController extends Controller
     public function register(){
         return view('auth.register');
     }
+
+    public function financeList(){
+        return view('dashboard.finance-list');
+    }
 }

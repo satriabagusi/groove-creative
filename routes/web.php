@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\AttendancesController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\FingerprintsController;
+use App\Http\Controllers\LedgersController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\SuppliesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,9 +32,17 @@ Route::post('/register', [UsersController::class, 'store'])->name('postRegister'
 
 Route::get('/dashboard', [PagesController::class, 'dashboard']);
 Route::get('/dashboard/employee', [UsersController::class, 'index']);
+Route::get('/dashboard/employee/attendance-list', [AttendancesController::class, 'index']);
+Route::get('/dashboard/employee/assign-fingerprint', [FingerprintsController::class, 'index']);
 
 Route::get('/dashboard/project', [ProjectsController::class, 'index']);
 Route::get('/dashboard/project/add', [ProjectsController::class, 'create']);
+Route::get('/dashboard/project/detail/{id}', [ProjectsController::class, 'show']);
+
+Route::get('/dashboard/finance', [PagesController::class, 'financeList']);
+Route::get('/dashboard/finance/ledgers', [LedgersController::class, 'index']);
+
+Route::get('/dashboard/supply', [SuppliesController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [UsersController::class, 'logout'])->name('logout');

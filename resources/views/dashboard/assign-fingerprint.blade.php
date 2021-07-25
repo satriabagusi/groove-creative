@@ -1,8 +1,8 @@
 @extends('templates.dashboard')
-@section('title', 'Groove Creative - Data Pegawai')
+@section('title', 'Groove Creative - Assign Fingerprint')
 @section('employee', 'menu-open')
-@section('employee-list', 'active')
-@section('header-text', 'Data Pegawai')
+@section('assign-fingerprint', 'active')
+@section('header-text', 'Assign Fingeprint')
 
 @section('content')
 
@@ -11,7 +11,7 @@
 <div class="content">
     <div class="container-fluid">
 
-        @livewire('user-list')
+        @livewire('assign-fingerprint')
 
     </div>
     <!-- /.container-fluid -->
@@ -24,8 +24,3 @@
 @endsection
 
 
-<div>
-    {{-- Nothing in the world is as soft and yielding as water. --}}
-
-
-</div>

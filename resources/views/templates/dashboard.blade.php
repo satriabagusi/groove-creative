@@ -11,10 +11,9 @@
   <!-- Bootstrap Select -->
   <link rel="stylesheet" href="{{asset('plugins/bootstrap-select/css/bootstrap-select.css')}}">
 
-{{--
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.css')}}">
-  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}"> --}}
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}">
   {{-- <!-- dropzonejs -->
   <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css"> --}}
 
@@ -26,9 +25,19 @@
 <link rel="stylesheet" href="{{asset('css/adminlte.css')}}">
 
 <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.css')}}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
 
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="{{asset('plugins/bs-stepper/css/bs-stepper.min.css')}}">
+
+  <link rel="stylesheet" href="{{asset('plugins/load-awesome/css/ball-pulse-sync.css')}}">
+
+  <link href=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/dataTables.bootstrap4.css rel=stylesheet>
 
     @livewireStyles()
+    <style>
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -96,36 +105,21 @@
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
                 {{-- <li class="nav-header">Menu</li> --}}
-            <li class="nav-item">
-            <a href="#" class="nav-link @yield('home')">
+            <li class="nav-item @yield('main')">
+            <a href="/dashboard" class="nav-link @yield('home')">
                 <ion-icon name="stats-chart"></ion-icon>
                 <p>
                 Dashboard
                 </p>
             </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item @yield('finance')">
+                <a href="/dashboard/finance" class="nav-link">
                     <ion-icon name="cash"></ion-icon>
                     <p>
-                    Keuangan
-                    <i class="fas fa-angle-left right"></i>
+                    Data Keuangan
                     </p>
                 </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <ion-icon name="wallet"></ion-icon>
-                        <p>Data Keuangan</p>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <ion-icon name="create"></ion-icon>
-                        <p>Catat Pengeluaran</p>
-                    </a>
-                    </li>
-                </ul>
             </li>
             <li class="nav-item @yield('project')">
                 <a href="#" class="nav-link">
@@ -148,6 +142,12 @@
                         <p>Tambah Proyek</p>
                     </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/project/ledgers" class="nav-link @yield('add-ledgers')">
+                            <ion-icon name="create"></ion-icon>
+                            <p>Catat Pengeluaran Proyek</p>
+                        </a>
+                        </li>
                 </ul>
             </li>
             <li class="nav-item @yield('employee')">
@@ -166,30 +166,30 @@
                     </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/dashboard/employee/attendance-list" class="nav-link @yield('attendance-list')">
                             <ion-icon name="keypad"></ion-icon>
                             <p>Data Absensi</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/dashboard/employee/assign-fingerprint" class="nav-link @yield('assign-fingerprint')">
                             <ion-icon name="finger-print"></ion-icon>
                             <p>Assign Fingerprint</p>
                         </a>
                     </li>
                 </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @yield('supplies')">
                     <a href="#" class="nav-link">
                         <ion-icon name="bag"></ion-icon>
                         <p>
-                        Suplai Barang
+                        Data Barang
                         <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/dashboard/supply" class="nav-link @yield('supplies-data')">
                             <ion-icon name="bag-handle"></ion-icon>
                             <p>Data Barang</p>
                         </a>
@@ -197,7 +197,7 @@
                         <li class="nav-item">
                         <a href="#" class="nav-link">
                             <ion-icon name="bag-add"></ion-icon>
-                            <p>Tambah Barang</p>
+                            <p>Catat Pembelian Barang</p>
                         </a>
                         </li>
                     </ul>
@@ -207,52 +207,8 @@
                         <ion-icon name="options"></ion-icon>
                         <p>
                         Pengaturan Akun
-                        <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <ion-icon name="options"></ion-icon>
-                            <p>Pengaturan Akun</p>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <ion-icon name="key"></ion-icon>
-                            <p>Ubah Password</p>
-                        </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <ion-icon name="cog"></ion-icon>
-                        <p>
-                        Pengaturan Aplikasi
-                        <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <ion-icon name="card"></ion-icon>
-                            <p>Pengaturan Data Keuangan</p>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <ion-icon name="bag-add"></ion-icon>
-                            <p>Pengaturan Data Barang</p>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <ion-icon name="people-circle"></ion-icon>
-                                <p>Pengaturan Akun Pegawai</p>
-                            </a>
-                            </li>
-                    </ul>
                 </li>
 
         </ul>
@@ -320,16 +276,28 @@ All rights reserved.
 <script src="{{asset('plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
 
 <!-- Select2 -->
-{{-- <script src="{{asset('plugins/select2/js/select2.full.js')}}"></script> --}}
+<script src="{{asset('plugins/select2/js/select2.full.js')}}"></script>
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{asset('js/demo.js')}}"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('js/pages/dashboard3.js')}}"></script>
+{{-- <script src="{{asset('js/pages/dashboard3.js')}}"></script> --}}
 <!-- Ionicons -->
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+<!-- daterangepicker -->
+<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+
+<!-- BS-Stepper -->
+<script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
+
+{{-- <script src="{{asset('plugins/jquery-mask/js/jquery.mask.js')}}"></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script> --}}
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @livewireScripts()
@@ -338,22 +306,9 @@ All rights reserved.
 
 <script src="{{asset('js/script.js')}}"></script>
 
-@if (Session::has('success'))
-    <script>
-        $(document).ready(function(){
-            Toast.fire({
-                icon: 'success',
-                title: 'Berhasil login'
-            })
-    })
-    </script>
-@endif
 
-@if (session()->has('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
-@endif
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.js></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.js></script>
 
 
 </body>

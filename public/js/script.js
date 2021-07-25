@@ -1,3 +1,11 @@
+$(document).ready(function(){
+    $('select').selectpicker();
+
+    $('.selectpciker').on( 'hide.bs.select', function ( ) {
+        $(this).trigger("focusout");
+    });
+});
+
 $('#nama').on('input', function() {
     $('#nama').removeClass('is-invalid');
 });

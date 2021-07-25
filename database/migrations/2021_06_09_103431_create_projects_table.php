@@ -22,7 +22,11 @@ class CreateProjectsTable extends Migration
             $table->integer('project_status');
             $table->integer('pay_status');
             $table->text('project_description');
+            $table->unsignedBigInteger('project_leader_id');
             $table->timestamps();
+
+            $table->foreign('project_leader_id')->references('id')->on('users');
+
         });
     }
 

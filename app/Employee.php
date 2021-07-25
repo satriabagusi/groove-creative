@@ -14,6 +14,7 @@ class Employee extends Model
         return $this->hasMany('App\User');
     }
 
+
     protected $fillable = [
         'name',
         'email',

@@ -9,4 +9,11 @@ class Supply extends Model
     public function transaction_details(){
         return $this->hasMany('App\Transaction_detail');
     }
+
+    protected $fillable = [
+        'supply_name',
+        'price',
+        'stock',
+    ];
+
 }

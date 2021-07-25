@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ProjectsController extends Controller
+class LedgersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        return view('dashboard.project-list');
+        return view('dashboard.add-ledgers');
     }
 
     /**
@@ -23,7 +23,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.add-project');
+        //
     }
 
     /**
@@ -45,7 +45,7 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
