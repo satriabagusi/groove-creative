@@ -14,8 +14,9 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}">
-  {{-- <!-- dropzonejs -->
-  <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css"> --}}
+
+  <!-- Image Uploader JQuery -->
+  <link type="text/css" rel="stylesheet" href="{{asset('plugins/image-uploader/css/image-uploader.css')}}">
 
 <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.css')}}">
 <!-- IonIcons -->
@@ -324,6 +325,13 @@ All rights reserved.
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="{{asset('plugins/clipboard-js/clipboard.js')}}"></script>
+
+<!-- Image Uploader JQuery -->
+<script src="{{asset('plugins/image-uploader/js/image-uploader.js')}}"></script>
+
+
 @livewireScripts()
 
 @stack('scripts')

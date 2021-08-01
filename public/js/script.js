@@ -4,6 +4,12 @@ $(document).ready(function(){
     $('.selectpciker').on( 'hide.bs.select', function ( ) {
         $(this).trigger("focusout");
     });
+
+    var clipboard = new ClipboardJS('.btn');
+
+    clipboard.on('success', function(e) {
+        $('#tooltips').tooltip('show');
+    });
 });
 
 $('#nama').on('input', function() {

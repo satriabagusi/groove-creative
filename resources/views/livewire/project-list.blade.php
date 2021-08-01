@@ -1,91 +1,4 @@
 <div>
-@if ($detailMode)
-
-      <div class="card">
-          {{-- {{$project}} --}}
-        <div class="card-header">
-            <div class="row">
-                <button class="btn btn-primary btn-circle btn-sm mr-2"  wire:click="$toggle('detailMode')">
-                    <i style="font-size: 14px;" class="fas fa-arrow-left"></i>
-                </button>
-                <h3 class="card-title mt-1">Detail Proyek</h3>
-
-            </div>
-        </div>
-        <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-lg-6 col-sm-6">
-                    <div class="info-box bg-light">
-                    <div class="info-box-content">
-                        <span class="info-box-text text-center text-success text-bold">
-                            <i class="fas fa-money-bill-wave"></i> Estimasi Anggaran
-                        </span>
-                        <span class="info-box-number text-center text-success mb-0">Rp. {{number_format(45000000, 0,0,'.')}}</span>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6 col-sm-6">
-                    <div class="info-box bg-light">
-                        <div class="info-box-content">
-                            <span class="info-box-text text-center text-danger text-bold">
-                                <i class="fas fa-money-bill-wave"></i> Total Pengeluaran Proyek
-                            </span>
-                            <span class="info-box-number text-center text-danger mb-0">Rp. {{number_format(15000000, 0,0,'.')}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-6 ">
-                    <h2 class="text-primary">
-                        <i class="fas fa-clipboard-list"></i>
-                        {{$project->project_name}}
-                    </h2>
-                        <h5 class="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</h5>
-                    <br>
-                    <div class="text-muted">
-                        <p class="text">Klien Proyek
-                            <b class="d-block">{{$project->client_name}}</b>
-                        </p>
-                        <p class="text">Pemimpin Proyek
-                            <b class="d-block">{{$project->users->employees->name}}</b>
-                        </p>
-
-
-                    </div>
-                </div>
-                <div class="col-6">
-                    <p class="text-sm">Invoice Proyek
-                        <a href="#" class="text-bold d-block">Tony Chicken</a>
-                    </p>
-                    <p class="text-sm">Payment Link
-                        <div>
-                            <a href="#" class="text-bold">Down Payment Link</a>
-                            <span wire:ignore class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Copy Link" onClick="copyToClipboard()">
-                                <i class="fas fa-link"></i>
-                            </span>
-                        </div>
-                        <a href="#" class="text-bold d-block">Link Pelunasan Pembayaran</a>
-                    </p>
-                    <div class="text-left mt-5 mb-3">
-                        <a href="#" class="btn btn-sm btn-info mb-2">
-                            <i class="fas fa-copy"></i> Copy Link Invoices
-                        </a>
-                        <a href="#" class="btn btn-sm btn-primary mb-2">
-                            <i class="fas fa-print"></i> Cetak Invoices
-                        </a>
-                        <a href="#" class="btn btn-sm btn-warning mb-2">
-                            <i class="fas fa-envelope"></i> Hubungi Klien
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        </div>
-
-
-@else
 
 <div class="row">
     <div class="col-12 col-lg">
@@ -196,10 +109,10 @@
                                 </td>
                                 <td>Rp. {{number_format($project->estimate_budget, 0,0,'.')}}</td>
                                 <td>
-                                    <button class="btn btn-info btn-sm" wire:click="detailProject({{$project->id}})">
+                                    <a class="btn btn-info btn-sm" href="/dashboard/project/detail/{{$project->id}}">
                                         <ion-icon wire:ignore name="document"></ion-icon>
                                         Detail
-                                    </button>
+                                    </a>
                                     <a class="btn bg-teal btn-sm" wire:click="editProject({{$project->id}})">
                                         <ion-icon wire:ignore name="create"></ion-icon>
                                         </i>
@@ -303,8 +216,6 @@
             @endif
 
         </div>
-
-@endif
 </div>
 
 
@@ -316,7 +227,7 @@
         $('[data-toggle="tooltip"]').tooltip();
 
         function copyToClipboard(params) {
-
+            var textCopy = $('#.')
         }
 
         window.addEventListener('swal', function(e){

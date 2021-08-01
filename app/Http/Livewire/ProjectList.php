@@ -17,6 +17,7 @@ class ProjectList extends Component
     protected $listeners = [
         'deleteProject',
         'refreshProp',
+        'detailMode' => 'detailMode',
     ];
 
     public $paginateData = 10;
@@ -124,6 +125,7 @@ class ProjectList extends Component
     }
 
     public function detailProject($id){
+        $this->editMode = false;
         $this->detailMode = true;
         $this->project = Project::findOrFail($id);
         $this->emit('refreshProp');
@@ -140,7 +142,6 @@ class ProjectList extends Component
 
     public function render()
     {
-        $this->emit('refreshProp');
         $s = '%'.$this->searchProject.'%';
         if($this->filterStatus == null){
             $projects = Project::with(['users.employees'])

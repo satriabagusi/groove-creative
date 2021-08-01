@@ -52,8 +52,6 @@
                             @error('project_leader') <div class="invalid-feedback d-block">{{$message}}</div> @enderror
                         </div>
 
-                    </div>
-                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="client_name">Nama Klien</label>
                             <input wire:model="client_name" type="text" class="form-control @error('client_name') is-invalid @enderror" id="client_name" placeholder="Nama Klien">
@@ -65,6 +63,10 @@
                             <input wire:model="client_contact" type="text" class="form-control @error('client_contact') is-invalid @enderror" id="client_contact" placeholder="Kontak Klien">
                             @error('client_contact') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+
+
+                    </div>
+                    <div class="col-md-5">
 
                         <div class="form-group">
                             <label for="estimate_budget">Estimasi Anggaran Proyek</label>
@@ -83,14 +85,30 @@
                             @error('pay_status') <span class="invalid-feedback">{{ $message }}</span> @enderror
                         </div>
 
-                        @if ($pay_status == 1)
+                        @if ($pay_status > 0)
                         <div class="form-group" id="total_pay" >
                             <label for="total_pay">Total Pembayaran</label>
                             <input wire:model="total_pay" type="numeric" class="form-control @error('total_pay') is-invalid @enderror" id="total_pay" placeholder="Total Pembayaran" value=0>
                             @error('total_pay') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        @endif
 
+                        <div class="form-group">
+                            <label for="">Bukti Pembayaran</label>
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input wire:model="bukti_pembayaran" type="file" class="custom-file-input" id="img_upload" aria-describedby="inputGroupFileAddon01" onchange="previewImage();" accept=".png, .jpg, .jpeg">
+                                    <label class="custom-file-label" for="img_upload">Choose file</label>
+                                </div>
+                            </div>
+                            @error('bukti_pembayaran') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                            @if($bukti_pembayaran)
+                            <img id="image-preview" class="img-fluid mt-2 mb-2" width="400px" id='img-upload' src="{{$bukti_pembayaran->temporaryUrl()}}"/>
+                            <button type="button" class="btn btn-danger btn-sm float-right mb-5" wire:click="$set('bukti_pembayaran', '')">
+                                <i class="far fa-trash-alt"></i> Hapus
+                            </button>
+                            @endif
+                        </div>
+                        @endif
 
 
 
@@ -111,13 +129,32 @@
 @push('scripts')
 
 <script>
+
     $(document).ready(function (){
+
+        $('#img_upload').on('change',function(){
+                //get the file name
+                var fileName = $(this).val().replace('C:\\fakepath\\', " ")
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+        });
+
+        $('#btn_remove').click(function(){
+            $('#img_upload').next('.custom-file-label').html("Choose file");
+            $('#img_upload').val("");
+            $('#image-preview').attr('src', "");
+            $(this).css("display", "none");
+        })
+
         window.addEventListener('swal', function(e){
             Swal.fire(e.detail);
         });
         $('.selectpicker').on( 'hide.bs.select', function ( ) {
             $(this).trigger("focusout");
         });
+        $('#project_pay_status option:selected').each(function() {
+            $('.input-images').imageUploader();
+        })
     })
 </script>
 

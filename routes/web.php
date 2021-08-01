@@ -5,9 +5,11 @@ use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\FingerprintsController;
 use App\Http\Controllers\LedgersController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProjectInvoicesController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SuppliesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Livewire\ProjectDetail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +39,9 @@ Route::get('/dashboard/employee/assign-fingerprint', [FingerprintsController::cl
 
 Route::get('/dashboard/project', [ProjectsController::class, 'index']);
 Route::get('/dashboard/project/add', [ProjectsController::class, 'create']);
-Route::get('/dashboard/project/detail/{id}', [ProjectsController::class, 'show']);
+Route::get('/dashboard/project/detail/{id}', ProjectDetail::class);
+
+Route::get('/payment/invoice/', [ProjectInvoicesController::class, 'show']);
 
 Route::get('/dashboard/finance', [PagesController::class, 'financeList']);
 Route::get('/dashboard/finance/ledgers', [LedgersController::class, 'index']);
