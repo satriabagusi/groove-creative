@@ -1,6 +1,6 @@
 <section class="content">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-8 col-8">
+        <div class="col-md-12 col-lg-10 col-12">
         <div class="card card-blue">
             <div class="card-header">
             <h3 class="card-title">General</h3>
@@ -10,7 +10,7 @@
 
             <form wire:submit.prevent="saveProjectData">
                 <div class="row justify-content-md-around justify-content-start">
-                    <div class="col-md-5">
+                    <div class="col-md-4 col-xs-12 col-12">
                         <div class="form-group">
                             <label for="project_name">Nama Proyek</label>
                             <input wire:model="project_name" type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" placeholder="Nama Proyek">
@@ -19,7 +19,7 @@
 
                         <div class="form-group">
                             <label>Deskripsi Proyek</label>
-                            <textarea wire:model="project_description" class="form-control @error('project_description') is-invalid @enderror" rows="3" placeholder=""></textarea>
+                            <textarea wire:model="project_description" class="form-control @error('project_description') is-invalid @enderror" rows="5" placeholder=""></textarea>
                             @error('project_description') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
@@ -48,10 +48,12 @@
                                 @endforeach
                                 @endif
                             </select>
-                            <span class="invalid-feedback"> error </ span>
+                            <span class="invalid-feedback"> error </span>
                             @error('project_leader') <div class="invalid-feedback d-block">{{$message}}</div> @enderror
                         </div>
+                    </div>
 
+                    <div class="col-md-4 col-xs-12 col-12">
                         <div class="form-group">
                             <label for="client_name">Nama Klien</label>
                             <input wire:model="client_name" type="text" class="form-control @error('client_name') is-invalid @enderror" id="client_name" placeholder="Nama Klien">
@@ -59,15 +61,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="client_contact">Kontak Klien</label>
-                            <input wire:model="client_contact" type="text" class="form-control @error('client_contact') is-invalid @enderror" id="client_contact" placeholder="Kontak Klien">
-                            @error('client_contact') <span class="text-danger">{{ $message }}</span> @enderror
+                            <label for="client_email">Email Klien</label>
+                            <input wire:model="client_email" type="text" class="form-control @error('client_email') is-invalid @enderror" id="client_email" placeholder="Kontak Klien">
+                            @error('client_email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
-
+                        <div class="form-group">
+                            <label for="client_phone">No HP Klien</label>
+                            <input wire:model="client_phone" type="number" class="form-control @error('client_phone') is-invalid @enderror" id="client_phone" placeholder="Kontak Klien">
+                            @error('client_phone') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                     </div>
-                    <div class="col-md-5">
 
+                    <div class="col-md-4 col-xs-12 col-12">
                         <div class="form-group">
                             <label for="estimate_budget">Estimasi Anggaran Proyek</label>
                             <input wire:model="estimate_budget" type="numeric" class="form-control @error('estimate_budget') is-invalid @enderror" id="estimate_budget " placeholder="Estimasi Anggaran">

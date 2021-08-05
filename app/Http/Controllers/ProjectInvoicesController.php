@@ -45,34 +45,70 @@ class ProjectInvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function testPay(Request $request){
+        echo $request->order_id;
+        echo "<br>";
+        echo $request->id;
+        $this->initPaymentGateway();
+
+        mt_srand($request->id);
+
+        $num = str_pad(mt_rand(0,100000000),8,0,STR_PAD_LEFT);
+        $date = date("Ymd");
+        $order_id = 'GrooveOrder-'.$date.'-'.$num;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $order_id,
+                'gross_amount' => 250000,
+            ),
+            'customer_details' => array(
+                'first_name' => 'KLIENKU',
+                'email' => 'KLIENKU@MAIL.com',
+                'phone' => '',
+            ),
+        );
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        return view('pages.test-pay', compact('snapToken'));
+    }
+
     public function show(Request $request)
     {
         $order_id = $request->order_id;
-        if($order_id){
-            $order_id = Crypt::decrypt($order_id);
-            $project_invoice = Project_invoice::where('order_id', $order_id)->first();
+        $project_invoice = Project_invoice::where('order_id', $order_id)->where('project_id', $request->id)->first();
+        if($project_invoice){
+            if($order_id){
+                $snapToken = "";
 
-            $this->initPaymentGateway();
+                if ($project_invoice->status == 0) {
+                    $this->initPaymentGateway();
 
-            $params = array(
-                'transaction_details' => array(
-                    'order_id' => $order_id,
-                    'gross_amount' => $project_invoice->must_pay,
-                ),
-                'customer_details' => array(
-                    'first_name' => $project_invoice->projects->client_name,
-                    'email' => $project_invoice->projects->client_email,
-                    'phone' => $project_invoice->projects->client_phone,
-                ),
-            );
+                    $params = array(
+                        'transaction_details' => array(
+                            'order_id' => $order_id,
+                            'gross_amount' => $project_invoice->total_pay,
+                        ),
+                        'customer_details' => array(
+                            'first_name' => $project_invoice->projects->client_name,
+                            'email' => $project_invoice->projects->client_email,
+                            'phone' => $project_invoice->projects->client_phone,
+                        ),
+                    );
 
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
+                    $snapToken = \Midtrans\Snap::getSnapToken($params);
+                }
 
-            // return $order_id;
-            return view('pages.project-invoice', compact('project_invoice', 'snapToken'));
+                return view('pages.project-invoice', compact('project_invoice', 'snapToken'));
+
+            }else{
+                abort(404);
+            }
         }else{
             abort(404);
         }
+
     }
 
     /**

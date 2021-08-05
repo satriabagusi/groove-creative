@@ -10,6 +10,7 @@ use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SuppliesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Livewire\ProjectDetail;
+use App\Http\Livewire\ProjectInvoice;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/payment/test/', [ProjectInvoicesController::class, 'testPay']);
 
 Route::get('/', function () {
     return view('templates.index');

@@ -54,6 +54,31 @@
         @page {
             margin:0;
         }
+
+        .stamp {
+            margin-right: 150px;
+            position:relative;
+            margint-top:150px;
+            color: #555;
+            font-size: 3rem;
+            font-weight: 700;
+            border: 0.25rem solid #555;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            text-transform: uppercase;
+            border-radius: 1rem;
+            font-family: 'Courier';
+            -webkit-mask-image: url('/img/grunge.png');
+            -webkit-mask-size: 944px 604px;
+            mix-blend-mode: multiply;
+        }
+
+        .is-approved {
+	        color: rgba(3.9%, 60%, 15.7%, 0.412);
+	        border: 0.5rem solid rgba(3.9%, 60%, 15.7%, 0.412);
+	        -webkit-mask-position: 13rem 6rem;
+            border-radius: 10;
+        }
     </style>
 </head>
 

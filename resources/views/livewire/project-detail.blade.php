@@ -51,7 +51,7 @@
                       <br>
                       <hr>
                       <div class="text-muted">
-                          <p class="text">Status Proyek
+                          <h5 class="text">Status Proyek</h5>
                           @if ($project->project_status === 0)
                               <b class="d-block text-gray">Hold</b>
                           @elseif($project->project_status === 1)
@@ -61,44 +61,78 @@
                           @elseif($project->project_status === 3)
                               <b class="d-block text-danger">Cancel</b>
                           @endif
-                          </p>
+                          <hr>
 
-                          <p class="text">Klien Proyek
-                              <b class="d-block">{{$project->client_name}}</b>
-                          </p>
-                          <p class="text">Pemimpin Proyek
-                              {{asset('storage/img/user/avatar/'.$project->users->avatar)}}
-                              {{-- <img src="{{asset('img/user/avatar/')}}" alt="" class="img-fluid"> --}}
-                              <b class="d-block">{{$project->users->employees->name}}</b>
-                          </p>
+                            <h5 class="text">Klien Proyek</h5>
+                            <b class="d-block">{{$project->client_name}}</b>
+                            @if ($project->client_email)
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{$project->client_email}}" class="btn btn-sm btn-warning mb-3" rel="noopener" target="_blank">
+                                    <i class="fas fa-envelope"></i> Hubungi Klien via Email
+                                </a>
+                            @elseif($project->client_phone)
+                                <a href="https://wa.me/{{$project->client_phone}}" class="btn btn-sm btn-warning mt-2 mb-3" rel="noopener" target="_blank">
+                                    <i class="fas fa-envelope"></i> Hubungi Klien via Whatsapp
+                                </a>
+                            @endif
+                            <hr>
+
+                          <h5 class="text">Pemimpin Proyek</h5>
+                        <img src="{{asset('storage/img/user/avatar/'.$project->users->avatar)}}" alt="" class="img-fluid" width="70px">
+                        <b class="">{{$project->users->employees->name}}</b>
                       </div>
                   </div>
                   <div class="col-12 col-md-6">
+                    @if ($project->project_invoices)
+                    <table class="table ">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">NO INVOICE</th>
+                            <th scope="col">Metode Pembayaran</th>
+                            <th scope="col">Bukti Pembayaran</th>
+                            <th scope="col">Link Invoice</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($project->project_invoices as $item)
 
-                      <p class="text-sm">Invoice Proyek
-                          @forelse ($project->project_invoices as $item)
-                          <a href="/payment/invoice?order_id={{\Crypt::encrypt($item->order_id)}}" class="text-bold d-block">{{$item->no_invoice}}</a>
-                          @empty
-                          <a class="text-muted d-block">Belum ada Invoice</a>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>{{$item->no_invoice}}</td>
+                            <td>{{$item->payment_method}}</td>
+                            <td><a href="/storage/img/bukti_pembayaran/{{$item->bukti_pembayaran}}" rel="noopener" target="_blank">
+                                <img class="img-fluid" width="100px" src="{{asset('/storage/img/bukti_pembayaran/'.$item->bukti_pembayaran)}}">
+                            </a></td>
+                            <td>
+                                <a href="/payment/invoice?order_id={{$item->order_id}}&id={{$project->id}}" target="_blank" rel="noopener noreferrer">{{$item->order_id}}</a>
+                            </td>
+                          </tr>
+                          @endforeach
 
-                          @endforelse
-                      </p>
-                      <hr>
-                      <div class="text-left mt-5 mb-3">
-                          {{-- {{$project->project_invoices->order_id}} --}}
-                          <span id="tooltips" class="d-inline-block" tabindex="0" data-toggle="tooltip" data-trigger="manual" title="Copied!">
-                              <button class="btn btn-sm btn-info mb-2" data-clipboard-text="{{url('/payment/invoice?order_id=')}}">
-                                  <i class="fas fa-copy"></i> Copy Link Invoices
-                              </button>
-                            </span>
+                        </tbody>
+                    </table>
+                    @endif
 
-                          <a href="#" class="btn btn-sm btn-primary mb-2">
-                              <i class="fas fa-print"></i> Cetak Invoices
-                          </a>
-                          <a href="#" class="btn btn-sm btn-warning mb-2">
-                              <i class="fas fa-envelope"></i> Hubungi Klien
-                          </a>
-                      </div>
+                    @if ($project->pay_status == 0)
+                        <p class="text-bold">Belum ada Pembayaran di Proyek ini</p>
+                        <div class="text-left mt-5 mb-3">
+                            {{-- {{$project->project_invoices->order_id}} --}}
+                            <button class="btn btn-sm btn-info mb-2" wire:click="createInvoice({{$project->id}})">
+                                <i class="fas fa-receipt"></i> Buat Invoice Pembayaran (Full)
+                            </button>
+
+                          <button class="btn btn-sm btn-info mb-2" wire:click="createInvoice({{$project->id}})">
+                              <i class="fas fa-receipt"></i> Buat Invoice Pembayaran (50%)
+                          </button>
+
+                        </div>
+                    @elseif($project->pay_status == 1)
+                        <button class="btn btn-sm btn-info mb-2" wire:click="createInvoice({{$project->id}})">
+                            <i class="fas fa-receipt"></i> Buat Invoice Pembayaran (Full)
+                        </button>
+                    @endif
+
+
                   </div>
               </div>
 

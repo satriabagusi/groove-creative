@@ -2,13 +2,12 @@
 
 @section('content')
 
-{{$snapToken}}
 <div>
     <div class="container-fluid">
           <!-- Main content -->
           <div class="invoice p-3 mb-3">
             <!-- title row -->
-            <div class="row justify-content-center">
+            <div class="row bg-tran justify-content-center">
               <div class="col-12">
                 <h4>
                     <img class="img-fluid" width="250px" src="{{asset('img/groove-logo.png')}}" alt="">
@@ -43,7 +42,7 @@
               <div class="col-sm-4 invoice-col">
                 <b>No. Invoice :</b> {{$project_invoice->no_invoice}}<br>
                 <b>Order ID:</b> #{{$project_invoice->order_id}}<br>
-                <b>Tanggal :</b> {{date('d/m/Y')}}<br>
+                <b>Tanggal :</b> {{date('d/m/Y ', strtotime($project_invoice->created_at))}}<br>
               </div>
               <!-- /.col -->
             </div>
@@ -108,10 +107,14 @@
             </div>
 
             <!-- this row will not appear when printing -->
-            <div class="row no-print">
+            <div class="row">
               <div class="col-12">
-                <button id="print" type="button" class="btn btn-default"><i class="fas fa-print"></i> Print</button>
-                <button id="pay_invoice" type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Bayar Invoice
+                <button id="print" type="button" class="btn btn-default no-print"><i class="fas fa-print"></i> Print</button>
+                @if ($project_invoice->status == 0)
+                <button id="pay_invoice" type="button" class="btn btn-success float-right no-print"><i class="far fa-credit-card"></i> Bayar Invoice
+                @else
+                <span class="stamp is-approved float-right">Terbayar</span>
+                @endif
                 </button>
               </div>
             </div>
@@ -130,15 +133,12 @@
             $('#print').click(function(){
                 window.addEventListener("load", window.print());
             })
-
-            $('#pay_invoice').click(function(){
-                window.snap.pay('{{$snapToken}}')
-            })
-            var payButton = document.getElementById('pay-button');
-            // For example trigger on button clicked, or any time you need
-            payButton.addEventListener('click', function () {
-                window.snap.pay('SNAP_TRANSACTION_TOKEN'); // Replace it with your transaction token
-            });
+            var status = {{$project_invoice->status}};
+            if(status == 0){
+                $('#pay_invoice').click(function(){
+                    window.snap.pay('{{$snapToken}}')
+                });
+            };
         });
     </script>
 
