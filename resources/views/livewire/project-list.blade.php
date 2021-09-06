@@ -59,7 +59,7 @@
                     <div class="col-6">
                         <h3>Belum ada data Proyek</h3>
                         <img src="{{asset('img/no_data.png')}}" width="300px" class="img-fluid">
-                        <h6>Tambah data proyek <a href="/dashboard/add-project">disini</a></h6>
+                        <h6>Tambah data proyek <a href="{{URL::to('/dashboard/add-project')}}">disini</a></h6>
                     </div>
                 </div>
                 @else
@@ -109,7 +109,7 @@
                                 </td>
                                 <td>Rp. {{number_format($project->estimate_budget, 0,0,'.')}}</td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="/dashboard/project/detail/{{$project->id}}">
+                                    <a class="btn btn-info btn-sm" href="{{URL::to('/dashboard/project/detail/'.$project->id)}}">
                                         <ion-icon wire:ignore name="document"></ion-icon>
                                         Detail
                                     </a>

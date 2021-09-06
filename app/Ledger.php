@@ -10,7 +10,12 @@ class Ledger extends Model
         return $this->hasMany('App\User');
     }
 
-    public function ledger_type(){
-        return $this->hasMany('App\Ledger_type');
+    public function project(){
+        return $this->belongsToMany('App\Project', 'project_ledgers');
     }
+
+    protected $guarded = [
+
+    ];
+
 }

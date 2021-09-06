@@ -1,5 +1,6 @@
-@extends('templates.project-invoice')
 
+@extends('templates.project-invoice')
+@section('title', 'GROOVE CREATIVE - INVOICE PROYEK')
 @section('content')
 
 <div>
@@ -55,18 +56,18 @@
                   <thead>
                   <tr>
                     <th>Qty</th>
-                    <th width="30%">Product</th>
-                    <th width="55%">Description</th>
-                    <th>Subtotal</th>
+                    <th width="30%">Produk/Jasa</th>
+                    <th width="55%">Deskripsi</th>
+                    <th>Jumlah</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>{{$project_invoice->projects->project_name}}</td>
-                      <td>{{$project_invoice->projects->project_description}}</td>
-                      <td class="text-bold">Rp. {{number_format($project_invoice->projects->estimate_budget, 0,0,'.')}}</td>
-                    </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>{{$project_invoice->projects->project_name}}</td>
+                            <td>{{$project_invoice->projects->project_description}}</td>
+                            <td class="text-bold">Rp. {{number_format($project_invoice->projects->estimate_budget, 0,0,'.')}}</td>
+                        </tr>
                   </tbody>
                 </table>
               </div>
@@ -88,18 +89,47 @@
                 <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                   Bank Transfer or Virtual Account Transfer | We Approve 3D Secure Payment
                 </p>
+                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                  We use Midtrans as Payment Gateway
+                </p>
+                <a href="http://midtrans.com" target="_blank" rel="noopener noreferrer"><img src="{{asset('img/bank-logo/Midtrans.png')}}" width="150px" alt="Midtrans Payment Gateway" class="img-fluid mb-2"></a>
+
               </div>
               <div style="display:none;" class="col-6 printable"></div>
               <!-- /.col -->
               <div class="col-6">
-                <p class="lead">Jumlah yang harus dibayarkan</p>
+                <p class="lead">Detail Pembayaran</p>
 
                 <div class="table-responsive">
                   <table class="table">
+                    @if ($firstInvoice)
                     <tr>
-                      <th style="width:80%">Subtotal:</th>
-                      <td class="text-bold">Rp. {{number_format($project_invoice->projects->estimate_budget, 0,0,'.')}}</td>
+                        <th style="width:80%">Subtotal:</th>
+                        <td class="text-bold">Rp. {{number_format($project_invoice->projects->estimate_budget, 0,0,'.')}}</td>
                     </tr>
+                    <tr>
+                        <td style="width:80%">Down Payment (20%) :</td>
+                        <td class="">- Rp. {{number_format( $firstInvoice->total_pay, 0,0,'.')}}</td>
+                    </tr>
+                    <tr>
+                        <td style="width:80%">Jumlah yang harus dibayarkan :</td>
+                        <td class="">Rp. {{number_format($project_invoice->total_pay, 0,0,'.')}}</td>
+                    </tr>
+                    @else
+                        @if ($project_invoice->invoice_type == 0)
+                            <tr>
+                                <th style="width:80%">Down Payment (20%) :</th>
+                                <td class="">Rp. {{number_format($project_invoice->total_pay, 0,0,'.')}}</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <th style="width:80%">Subtotal :</th>
+                                <td class="">Rp. {{number_format($project_invoice->total_pay, 0,0,'.')}}</td>
+                            </tr>
+                        @endif
+
+                    @endif
+
                   </table>
                 </div>
               </div>
@@ -111,11 +141,17 @@
               <div class="col-12">
                 <button id="print" type="button" class="btn btn-default no-print"><i class="fas fa-print"></i> Print</button>
                 @if ($project_invoice->status == 0)
-                <button id="pay_invoice" type="button" class="btn btn-success float-right no-print"><i class="far fa-credit-card"></i> Bayar Invoice
+                    @if (!empty($firstInvoice) && $firstInvoice->status == 0)
+                        <button id="pay_invoice" type="button" class="btn btn-success float-right no-print" disabled><i class="far fa-credit-card"></i> Down Payment belum terbayar
+                        </button>
+                    @else
+                        <button id="pay_invoice" type="button" class="btn btn-success float-right no-print"><i class="far fa-credit-card"></i> Bayar Invoice
+                        </button>
+                    @endif
+
                 @else
                 <span class="stamp is-approved float-right">Terbayar</span>
                 @endif
-                </button>
               </div>
             </div>
           </div>
@@ -134,11 +170,25 @@
                 window.addEventListener("load", window.print());
             })
             var status = {{$project_invoice->status}};
-            if(status == 0){
-                $('#pay_invoice').click(function(){
-                    window.snap.pay('{{$snapToken}}')
-                });
-            };
+            @if (!empty($firstInvoice))
+                var dpStatus = {{$firstInvoice->status}};
+
+                if(status == 0){
+                    if(dpStatus !== 0){
+                        $('#pay_invoice').click(function(){
+                            window.snap.pay('{{$snapToken}}')
+                        });
+                    }
+                }
+            @else
+                if(status == 0){
+                    $('#pay_invoice').click(function(){
+                        window.snap.pay('{{$snapToken}}')
+                    });
+                }
+            @endif
+
+;
         });
     </script>
 

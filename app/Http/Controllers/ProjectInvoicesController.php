@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use App\Project_invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -46,38 +47,17 @@ class ProjectInvoicesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function testPay(Request $request){
-        echo $request->order_id;
-        echo "<br>";
-        echo $request->id;
-        $this->initPaymentGateway();
-
-        mt_srand($request->id);
-
-        $num = str_pad(mt_rand(0,100000000),8,0,STR_PAD_LEFT);
-        $date = date("Ymd");
-        $order_id = 'GrooveOrder-'.$date.'-'.$num;
-
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => $order_id,
-                'gross_amount' => 250000,
-            ),
-            'customer_details' => array(
-                'first_name' => 'KLIENKU',
-                'email' => 'KLIENKU@MAIL.com',
-                'phone' => '',
-            ),
-        );
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
-
-        return view('pages.test-pay', compact('snapToken'));
-    }
-
     public function show(Request $request)
     {
         $order_id = $request->order_id;
-        $project_invoice = Project_invoice::where('order_id', $order_id)->where('project_id', $request->id)->first();
+        $project_invoice = Project_invoice::where('order_id', $order_id)
+                            ->where('project_id', $request->id)
+                            ->first();
+        $firstInvoice = Project_invoice::where('project_id', $request->id)
+                            ->where('order_id', '!=', $order_id)
+                            ->where('invoice_type', 0)
+                            ->first();
+
         if($project_invoice){
             if($order_id){
                 $snapToken = "";
@@ -100,10 +80,43 @@ class ProjectInvoicesController extends Controller
                     $snapToken = \Midtrans\Snap::getSnapToken($params);
                 }
 
-                return view('pages.project-invoice', compact('project_invoice', 'snapToken'));
+                return view('pages.project-invoice', compact('firstInvoice','project_invoice', 'snapToken'));
 
             }else{
                 abort(404);
+            }
+        }else{
+            abort(404);
+        }
+    }
+
+    public function invoiceNotification(Request $request){
+        $order_id = $request->order_id;
+        $id = substr($order_id, 17);
+        $invoice_status = $request->status_code;
+        $project_invoice = Project_invoice::where('order_id', $order_id)
+                            ->where('project_id', $id)
+                            ->where('status', 0)
+                            ->first();
+
+        if ($project_invoice) {
+            $updateInvoice = Project_invoice::where('order_id', $order_id)
+                        ->where('project_id', $id)
+                        ->update([
+                            'status' => 1,
+                            'invoice_status' => $invoice_status,
+                        ]);
+
+            if($project_invoice->invoice_type == 0){
+                $updateProject = Project::where('id', $id)->update(['pay_status' => 1]);
+            }elseif($project_invoice->invoice_type == 1){
+                $updateProject = Project::where('id', $id)->update(['pay_status' => 2]);
+            }
+
+
+            if($updateInvoice && $updateProject){
+                $status = $request->transaction_status;
+                return redirect('/payment/invoice?order_id='.$order_id.'&id='.$id);
             }
         }else{
             abort(404);

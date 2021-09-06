@@ -9,6 +9,9 @@ use App\Http\Controllers\ProjectInvoicesController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SuppliesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Livewire\AccountSettings;
+use App\Http\Livewire\CreateProjectInvoice;
+use App\Http\Livewire\CreateProjectLedgers;
 use App\Http\Livewire\ProjectDetail;
 use App\Http\Livewire\ProjectInvoice;
 use Illuminate\Support\Facades\Route;
@@ -24,11 +27,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/payment/test/', [ProjectInvoicesController::class, 'testPay']);
 
-Route::get('/', function () {
-    return view('templates.index');
-});
+Route::get('/', [PagesController::class, 'dashboard']);
 
 Route::get('/login', [PagesController::class, 'login'])->name('login');
 Route::post('/login', [UsersController::class, '__login'])->name('postLogin');
@@ -45,11 +45,16 @@ Route::get('/dashboard/project/add', [ProjectsController::class, 'create']);
 Route::get('/dashboard/project/detail/{id}', ProjectDetail::class);
 
 Route::get('/payment/invoice/', [ProjectInvoicesController::class, 'show']);
+Route::get('/payment/finish/', [ProjectInvoicesController::class, 'invoiceNotification']);
 
 Route::get('/dashboard/finance', [PagesController::class, 'financeList']);
 Route::get('/dashboard/finance/ledgers', [LedgersController::class, 'index']);
+Route::get('/dashboard/finance/create/project-ledgers', CreateProjectLedgers::class);
+Route::get('/dashboard/finance/create/project-invoice', CreateProjectInvoice::class);
 
 Route::get('/dashboard/supply', [SuppliesController::class, 'index']);
+
+Route::get('/dashboard/account/settings', AccountSettings::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [UsersController::class, 'logout'])->name('logout');

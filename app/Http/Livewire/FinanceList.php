@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Ledger;
+use App\Project;
+use App\Transaction;
 use Livewire\Component;
 
 class FinanceList extends Component
@@ -12,9 +15,12 @@ class FinanceList extends Component
     public $profit_month;
 
     public function mount(){
-        $this->income_month = 35600000;
-        $this->ledgers_month = 15340000;
-        $this->profit_month = 20260000;
+        $thisMonth = date("m");
+        $projectMonth = Project::whereMonth('created_at', $thisMonth)->sum('estimate_budget');
+        $transactionMonth = Transaction::whereMonth('created_at', $thisMonth)->sum('total_pay');
+        $this->profit_month = ($projectMonth+$transactionMonth) - Ledger::whereMonth('created_at', $thisMonth)->sum('ammount');
+        $this->income_month = $projectMonth+$transactionMonth;
+        $this->ledgers_month = Ledger::whereMonth('created_at', $thisMonth)->sum('ammount');
     }
 
     public function render()

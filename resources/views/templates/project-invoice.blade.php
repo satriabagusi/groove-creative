@@ -79,6 +79,10 @@
 	        -webkit-mask-position: 13rem 6rem;
             border-radius: 10;
         }
+
+        .page-break {
+            page-break-after: always;
+        }
     </style>
 </head>
 

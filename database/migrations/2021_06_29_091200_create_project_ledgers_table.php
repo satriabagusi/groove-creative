@@ -15,8 +15,8 @@ class CreateProjectLedgersTable extends Migration
     {
         Schema::create('project_ledgers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ledgers_id');
-            $table->unsignedBigInteger('projects_id');
+            $table->unsignedBigInteger('ledger_id');
+            $table->unsignedBigInteger('projecs_id');
             $table->timestamps();
 
             $table->foreign('ledgers_id')->references('id')->on('ledgers');

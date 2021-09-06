@@ -17,6 +17,7 @@ class CreateLedgersTable extends Migration
             $table->id();
             $table->integer('ammount');
             $table->text('description');
+            $table->string('invoice_pembelian');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('ledger_type_id');
             $table->timestamps();

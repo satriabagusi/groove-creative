@@ -117,7 +117,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light-primary">
     <!-- Brand Logo -->
-    <a href="/dashboard" class="brand-link">
+    <a href="{{URL::to('/dashboard')}}" class="brand-link">
         <img src="{{asset('img/groove-logo.png')}}" alt="AdminLTE Logo" class="w-75 img-fluid ">
     </a>
 
@@ -131,21 +131,50 @@
                 with font-awesome or any other icon font library -->
                 {{-- <li class="nav-header">Menu</li> --}}
             <li class="nav-item @yield('main')">
-            <a href="/dashboard" class="nav-link @yield('home')">
+            <a href="{{URL::to('/dashboard')}}" class="nav-link @yield('home')">
                 <ion-icon name="stats-chart"></ion-icon>
                 <p>
                 Dashboard
                 </p>
             </a>
             </li>
+            <li class="nav-header text-bold text-secondary border-top">Keuangan</li>
             <li class="nav-item @yield('finance')">
-                <a href="/dashboard/finance" class="nav-link">
+                <a href="#" class="nav-link">
                     <ion-icon name="cash"></ion-icon>
                     <p>
-                    Data Keuangan
+                    Keuangan
+                    <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                    <a href="{{URL::to('/dashboard/finance')}}"" class="nav-link @yield('finance-list')">
+                        <ion-icon name="cash"></ion-icon>
+                        <p>Data Keuangan</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{URL::to('/dashboard/finance/create/project-invoice')}}" class="nav-link @yield('create-invoice')">
+                            <ion-icon name="document"></ion-icon>
+                            <p>Buat Invoice Proyek</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{URL::to('/dashboard/finance/create/project-ledgers')}}" class="nav-link @yield('add-ledgers')">
+                            <ion-icon name="create"></ion-icon>
+                            <p>Catat Pengeluaran Proyek</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <ion-icon name="bag-add"></ion-icon>
+                            <p>Catat Pembelian Barang</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
+            <li class="nav-header text-bold text-secondary border-top">Proyek</li>
             <li class="nav-item @yield('project')">
                 <a href="#" class="nav-link">
                     <ion-icon name="documents"></ion-icon>
@@ -156,25 +185,20 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                    <a href="/dashboard/project" class="nav-link @yield('project-list')">
+                    <a href="{{URL::to('/dashboard/project')}}" class="nav-link @yield('project-list')">
                         <ion-icon name="document-text"></ion-icon>
                         <p>Data Proyek</p>
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a href="/dashboard/project/add" class="nav-link @yield('add-project')">
+                    <a href="{{URL::to('/dashboard/project/add')}}" class="nav-link @yield('add-project')">
                         <ion-icon name="document-attach"></ion-icon>
                         <p>Tambah Proyek</p>
                     </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/project/ledgers" class="nav-link @yield('add-ledgers')">
-                            <ion-icon name="create"></ion-icon>
-                            <p>Catat Pengeluaran Proyek</p>
-                        </a>
-                        </li>
                 </ul>
             </li>
+            <li class="nav-header text-bold text-secondary border-top">Pegawai</li>
             <li class="nav-item @yield('employee')">
                 <a href="#" class="nav-link">
                     <ion-icon name="id-card"></ion-icon>
@@ -185,50 +209,35 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item ">
-                    <a href="/dashboard/employee" class="nav-link @yield('employee-list')">
+                    <a href="{{URL::to('/dashboard/employee')}}" class="nav-link @yield('employee-list')">
                         <ion-icon  name="people-circle"></ion-icon>
                         <p>Data Pegawai</p>
                     </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/dashboard/employee/attendance-list" class="nav-link @yield('attendance-list')">
+                        <a href="{{URL::to('/dashboard/employee/attendance-list')}}" class="nav-link @yield('attendance-list')">
                             <ion-icon name="keypad"></ion-icon>
                             <p>Data Absensi</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/dashboard/employee/assign-fingerprint" class="nav-link @yield('assign-fingerprint')">
+                        <a href="{{URL::to('/dashboard/employee/assign-fingerprint')}}" class="nav-link @yield('assign-fingerprint')">
                             <ion-icon name="finger-print"></ion-icon>
                             <p>Assign Fingerprint</p>
                         </a>
                     </li>
                 </ul>
                 </li>
+                <li class="nav-header text-bold text-secondary border-top">Inventory</li>
                 <li class="nav-item @yield('supplies')">
-                    <a href="#" class="nav-link">
-                        <ion-icon name="bag"></ion-icon>
-                        <p>
-                        Data Barang
-                        <i class="fas fa-angle-left right"></i>
-                        </p>
+                    <a href="{{URL::to('/dashboard/supply')}}" class="nav-link @yield('supplies-data')">
+                        <ion-icon name="bag-handle"></ion-icon>
+                        <p>Data Barang</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                        <a href="/dashboard/supply" class="nav-link @yield('supplies-data')">
-                            <ion-icon name="bag-handle"></ion-icon>
-                            <p>Data Barang</p>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <ion-icon name="bag-add"></ion-icon>
-                            <p>Catat Pembelian Barang</p>
-                        </a>
-                        </li>
-                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-header text-bold text-secondary border-top">Pengaturan</li>
+                <li class="nav-item @yield('account')">
+                    <a href="/dashboard/account/settings" class="nav-link @yield('account-settings')">
                         <ion-icon name="options"></ion-icon>
                         <p>
                         Pengaturan Akun
@@ -330,6 +339,8 @@ All rights reserved.
 
 <!-- Image Uploader JQuery -->
 <script src="{{asset('plugins/image-uploader/js/image-uploader.js')}}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 @livewireScripts()
